@@ -16,7 +16,6 @@ namespace GetEmbedToken.Services {
       string tenentId = Environment.GetEnvironmentVariable("TenantId");
       string tenantSpecificAuthority = "https://login.microsoftonline.com/" + tenentId;
 
-
       var appConfidential = ConfidentialClientApplicationBuilder.Create(appId)
                                 .WithClientSecret(appSecret)
                                 .WithAuthority(tenantSpecificAuthority)
@@ -25,11 +24,10 @@ namespace GetEmbedToken.Services {
       string[] scopes = { "https://analysis.windows.net/powerbi/api/.default" };
 
       var authResult = appConfidential.AcquireTokenForClient(scopes).ExecuteAsync().Result;
+
       return authResult.AccessToken;
     } 
 
-
   }
-
 
 }
