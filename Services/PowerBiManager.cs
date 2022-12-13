@@ -60,6 +60,7 @@ namespace GetEmbedToken.Services {
               Console.WriteLine("Exception Message: {0}", e.Message);
               Console.WriteLine("Exception Stacktrace: {0}", e.StackTrace);
       }
+      return null;
 
     }
 
