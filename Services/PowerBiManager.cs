@@ -26,7 +26,7 @@ namespace GetEmbedToken.Services {
       datasetRequests.Add(new GenerateTokenRequestV2Dataset(report.DatasetId));
 
       var reportRequests = new List<GenerateTokenRequestV2Report>();
-      reportRequests.Add(new GenerateTokenRequestV2Report(report.Id, allowEdit: true));
+      reportRequests.Add(new GenerateTokenRequestV2Report(report.Id, allowEdit: false));
 
       var workspaceRequests = new List<GenerateTokenRequestV2TargetWorkspace>();
       workspaceRequests.Add(new GenerateTokenRequestV2TargetWorkspace(WorkspaceId));
