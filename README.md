@@ -1,6 +1,8 @@
 # GetEmbedToken
 Ever wonder how to securely embed a Power BI report into your application when you can't use one of the native Power BI Embeded server side SDKs? Well look no further, GetEmbedToken is an C# Azure Function that assists in retrieving a Power BI Embed token so you can use it elsewhere in your application flow.
 
+**Please note this codebase is for illustrative purposes only and should not be deployed to production environment.**
+
 ## Components
 This project is made up of three components.
 
