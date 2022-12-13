@@ -46,9 +46,16 @@ namespace GetEmbedToken.Services {
         };
 
       // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
-      var EmbedTokenResult = await pbiClient.EmbedToken.GenerateTokenAsync(tokenRequest);
 
-      return EmbedTokenResult.Token;
+      try {
+        var EmbedTokenResult = await pbiClient.EmbedToken.GenerateTokenAsync(tokenRequest);
+        return EmbedTokenResult.Token;
+      } catch (Exception e) {
+          Console.WriteLine(e.Message);
+          Console.WriteLine(e.StackTrace);
+      } 
+        return null;
+
 
     }
 
