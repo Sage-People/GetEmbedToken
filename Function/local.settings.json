@@ -1,0 +1,10 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "TenantId": "409e5b41-bb5d-49d2-9db6-8ec4280cf4fe",
+    "AppId": "898573fe-bb8a-4203-a660-2d672c5c1efa",
+    "AppSecret": "ySC8Q~envuJcKZOPyq1KennaPtej9-pNUCfJnb1a",
+    "WorkspaceId": "e8f9aa62-2b5b-47fe-a57a-fe6fbfa5dc88"
+  }
+}

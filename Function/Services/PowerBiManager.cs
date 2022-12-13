@@ -21,26 +21,26 @@ namespace GetEmbedToken.Services {
     public static async Task<string> GetEmbedToken(Guid WorkspaceId, Guid ReportId, string username, string role) {
 
       var report = await pbiClient.Reports.GetReportInGroupAsync(WorkspaceId,ReportId);
-      Console.WriteLine("Report: {0}", report.ToString());
 
       var datasetRequests = new List<GenerateTokenRequestV2Dataset>();
       datasetRequests.Add(new GenerateTokenRequestV2Dataset(report.DatasetId));
-      Console.WriteLine("DatasetRequests: {0}", datasetRequests.ToString());
 
       var reportRequests = new List<GenerateTokenRequestV2Report>();
       reportRequests.Add(new GenerateTokenRequestV2Report(report.Id, allowEdit: false));
-      Console.WriteLine("ReportRequests: {0}", reportRequests.ToString());
 
       var workspaceRequests = new List<GenerateTokenRequestV2TargetWorkspace>();
       workspaceRequests.Add(new GenerateTokenRequestV2TargetWorkspace(WorkspaceId));
-      Console.WriteLine("WorkspaceRequests: {0}", workspaceRequests.ToString());
 
       var effectiveIdentities = new List<EffectiveIdentity>();
-      var effectiveIdentitiiesRoles = new List<string>();
-      effectiveIdentitiiesRoles.Add(role);
-      effectiveIdentities.Add(new EffectiveIdentity(username: username, roles: effectiveIdentitiiesRoles));
-      Console.WriteLine("effectiveIdentities: {0}", effectiveIdentities.ToString());
-
+      var effectiveIdentity = new EffectiveIdentity(username: username, datasets: new List<string>(){report.DatasetId.ToString()});
+      if (role != null) {
+        var effectiveIdentitiiesRoles = new List<string>();
+          foreach(var r in role.Split(",")) {
+            effectiveIdentitiiesRoles.Add(r);
+          }
+        effectiveIdentity.Roles = effectiveIdentitiiesRoles;
+      }
+      effectiveIdentities.Add(effectiveIdentity);
 
       GenerateTokenRequestV2 tokenRequest =
         new GenerateTokenRequestV2 {
@@ -49,21 +49,12 @@ namespace GetEmbedToken.Services {
           Reports = reportRequests,
           TargetWorkspaces = workspaceRequests
         };
-      Console.WriteLine("tokenRequest: {0}", tokenRequest.ToString());
+        
+        tokenRequest.LifetimeInMinutes = 10;
 
       // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
-      try {
         var EmbedTokenResult = await pbiClient.EmbedToken.GenerateTokenAsync(tokenRequest);
         return EmbedTokenResult.Token;
-      }
-      catch (Exception e) {
-              Console.WriteLine("Exception Message: {0}", e.Message);
-              Console.WriteLine("Exception Stacktrace: {0}", e.StackTrace);
-      }
-      return null;
-
     }
-
   }
-
 }
