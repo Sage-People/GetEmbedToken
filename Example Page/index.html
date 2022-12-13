@@ -1,0 +1,39 @@
+<html>
+
+<!-- You will need to link to the proper JS libraries -->
+<!-- JQuery JS Files Located at https://jquery.com/ -->
+<script src="./jquery.js"></script>
+<!-- PowerBI JS Files Located at https://github.com/microsoft/PowerBI-JavaScript -->
+<script src="./powerbi.js"></script>
+<script type="text/javascript">
+
+window.onload = function () {
+
+let models = window['powerbi-client'].models;
+
+var embedConfiguration = {
+    type: 'report',
+	accessToken: '<EMBED TOKEN>',
+	tokenType: models.TokenType.Embed,
+    embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=<REPORT ID>&groupId=<WORKSPACE ID>',
+	id:'<REPORT ID>'
+//settings: {
+//              {settings_ from link}
+//            }
+    }; 
+var $reportContainer = $('#dashboardContainer');
+var report = powerbi.embed($reportContainer.get(0), embedConfiguration);
+}
+
+function reloadreport(){
+	var element = $('#dashboardContainer');
+	alert(element);
+	var report = powerbi.get(element);
+	report.reload().catch(error => {console.log(error)  });
+};
+</script> 
+<div id="dashboardContainer"></div>
+</html>  
+
+
+
