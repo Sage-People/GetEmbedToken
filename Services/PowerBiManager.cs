@@ -18,7 +18,7 @@ namespace GetEmbedToken.Services {
     static TokenCredentials tokenCredentials = new TokenCredentials(accessToken, "Bearer");
     static PowerBIClient pbiClient = new PowerBIClient(new Uri(urlPowerBiServiceApiRoot), tokenCredentials);
 
-    public static async Task<string> GetEmbedToken(Guid WorkspaceId, Guid ReportId) {
+    public static async Task<string> GetEmbedToken(Guid WorkspaceId, Guid ReportId, string username, string role) {
 
       var report = await pbiClient.Reports.GetReportInGroupAsync(WorkspaceId,ReportId);
 
@@ -31,9 +31,16 @@ namespace GetEmbedToken.Services {
       var workspaceRequests = new List<GenerateTokenRequestV2TargetWorkspace>();
       workspaceRequests.Add(new GenerateTokenRequestV2TargetWorkspace(WorkspaceId));
 
+      var effectiveIdentities = new List<EffectiveIdentity>();
+      var effectiveIdentitiiesRoles = new List<string>();
+      effectiveIdentitiiesRoles.Add(role);
+      effectiveIdentities.Add(new EffectiveIdentity(username: username, roles: effectiveIdentitiiesRoles));
+
+
       GenerateTokenRequestV2 tokenRequest =
         new GenerateTokenRequestV2 {
           Datasets = datasetRequests,
+          Identities = effectiveIdentities,
           Reports = reportRequests,
           TargetWorkspaces = workspaceRequests
         };

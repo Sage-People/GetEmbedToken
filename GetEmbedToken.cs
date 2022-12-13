@@ -15,8 +15,10 @@ namespace GetEmbedToken {
 
       Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("WorkspaceId"));
       Guid ReportId = new Guid(Environment.GetEnvironmentVariable("ReportId"));
+      string Username = Environment.GetEnvironmentVariable("Username");
+      string Role = Environment.GetEnvironmentVariable("Role");
 
-      var embedToken = await PowerBiManager.GetEmbedToken(WorkspaceId, ReportId);
+      var embedToken = await PowerBiManager.GetEmbedToken(WorkspaceId, ReportId, Username, Role);
 
       return new OkObjectResult(embedToken);
 
