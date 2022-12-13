@@ -3,6 +3,9 @@
 
 # Azureupload localsettings file since this is a sample to get started
 
+# Mac specific files
+.DS_Store
+
 # User-specific files
 *.suo
 *.user
