@@ -14,9 +14,9 @@ namespace GetEmbedToken {
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log) {
 
       Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("WorkspaceId"));
-      Guid ReportId = new Guid(Environment.GetEnvironmentVariable("ReportId"));
-      string Username = Environment.GetEnvironmentVariable("Username");
-      string Role = Environment.GetEnvironmentVariable("Role");
+      Guid ReportId = new Guid(req.Query["report_id"]);
+      string Username = req.Query["username"];
+      string Role = req.Query["role"];
 
       var embedToken = await PowerBiManager.GetEmbedToken(WorkspaceId, ReportId, Username, Role);
 
