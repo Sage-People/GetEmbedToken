@@ -16,10 +16,11 @@ This project is made up of three components.
 This function supports the following environment variables for configuration. 
 |Variable|Description|Required|
 |---|---|---|
-|AppId|When specififed the function will login to Power BI using the specified app registration instead of its default behavior which uses its managed identity.|No|
-|AppSecret|Used in conjunction with AppId to specify the app registration secret.|With AppId|
-|TenantId|Used to specify the Azure Active Directory tenant to authenticate the App Registration with when AppId is specified|No|
-|WorkspaceId|Guid which identifies the default Power BI workspace to use with this function, it can be overrode at execution time by specifying a 'workspacE_id'|Yes|
+|AppId|When specififed the function will login to Power BI using the specified app registration instead of its default behavior which uses its managed identity.
+|AppSecret|Used in conjunction with AppId to specify the app registration secret.
+|TenantId|Used to specify the Azure Active Directory tenant to authenticate the App Registration with when AppId is specified
+|WorkspaceId|Guid which identifies the default Power BI workspace to use with this function, it can be overrode at execution time by specifying a 'workspace_id'
+|TokenTimeout|Specifies how long the Embed Token should live for in minutes. This can be overwritten at execution time by passing token_timeout to the function.
 
 ## Known Issues
 * In this model reports need to be embedded using Java Script so your deployment requires proper CORS headers
@@ -30,9 +31,10 @@ This example is still fairly rough, and I'm working to add some additional enhan
 * ~~Thorough commenting of code to make this example more meaningful.~~ (Complete)
 * ~~Enhancement to the example page so you don't have to copy and paste the embed token into it to test your deployment~~ (Complete)
 * Better error handling in the Azure function (checking to see if a report exists, checking if the right roles are being used, etc.)
-* Additional configuratbility using environment variables (e.g. Token TTL)
+* ~~Additional configuratbility using environment variables (e.g. Token TTL)~~ (Complete)
 * ~~Utilization of the function's Service Principal instead of an App Registration for authenticating to Power BI.~~ (Complete)
-* Read WorkspaceId from the HTTP request for more flexibility.
+* ~~Read WorkspaceId from the HTTP request for more flexibility.~~ (Complete)
+* Add support to install the function in your environment with Azure Templates.
 
 ## Credit
 This project was originally forked from [PowerBIDevCamp](https://github.com/PowerBiDevCamp/GetEmbedToken), and enhanced to enable the use of effective identities. When I started working on this project I had a rough idea on what I needed to accomplish and their version of the code really got me moving in the right direction.
