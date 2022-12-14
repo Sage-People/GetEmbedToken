@@ -10,12 +10,18 @@ using Azure.Core;
 namespace GetEmbedToken.Services {
 
   class TokenManager {
+    //This function gets the Azure Active Directory access token needed to communicate with the PowerBI service.
     public static string GetAadAccessToken() {
+      
+      //Read the AppId envirnoment variable.
       string appId = Environment.GetEnvironmentVariable("AppId");
  
+      //Set cope for OAuth token to allow it to authenticate to Power BI
       string token = null; 
       string[] scopes = { "https://analysis.windows.net/powerbi/api/.default" };
 
+      /* If we successfully read the appId environment variable we'll get the OAuth token using an app registration,
+          otherwise we'll use the system managed identity on the Azure Functions application */
       if (appId != null) {
         string appSecret = Environment.GetEnvironmentVariable("AppSecret");
         string tenentId = Environment.GetEnvironmentVariable("TenantId");
