@@ -21,7 +21,7 @@ namespace GetEmbedToken.Services {
         this method could be updated to use a collection of reports instead of a single report like we do with
         roles however that adds some complexity when mapping roles. To simplify this example we are only working 
         with single reports. */
-    public static async Task<string> GetEmbedToken(Guid WorkspaceId, Guid ReportId, string username, string roles) {
+    public static async Task<string> GetEmbedToken(Guid WorkspaceId, Guid ReportId, string username, string roles, int timeout) {
       //Get report metadata from the Power BI service using the service principal.
       var report = await pbiClient.Reports.GetReportInGroupAsync(WorkspaceId,ReportId);
       //Create list of associated datasets to request access to with the embed token.
@@ -56,7 +56,7 @@ namespace GetEmbedToken.Services {
         };
         /* Set the timeout for the Embed Token. After this period of time the function needs to be called again for a 
             user to continue accessing the reports */ 
-        tokenRequest.LifetimeInMinutes = 10;
+        tokenRequest.LifetimeInMinutes = timeout;
 
       // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
       var EmbedTokenResult = await pbiClient.EmbedToken.GenerateTokenAsync(tokenRequest);
