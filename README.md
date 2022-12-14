@@ -19,7 +19,7 @@ This function supports the following environment variables for configuration.
 |AppId|When specififed the function will login to Power BI using the specified app registration instead of its default behavior which uses its managed identity.|No|
 |AppSecret|Used in conjunction with AppId to specify the app registration secret.|With AppId|
 |TenantId|Used to specify the Azure Active Directory tenant to authenticate the App Registration with when AppId is specified|No|
-|WorkspaceId|Guid which identifies the Power BI workspace to use with this function|Yes|
+|WorkspaceId|Guid which identifies the default Power BI workspace to use with this function, it can be overrode at execution time by specifying a 'workspacE_id'|Yes|
 
 ## Known Issues
 * In this model reports need to be embedded using Java Script so your deployment requires proper CORS headers
@@ -27,7 +27,7 @@ This function supports the following environment variables for configuration.
 
 ## Future Enhancements
 This example is still fairly rough, and I'm working to add some additional enhancements so it's more useful for users wishing to repeat the pattern. Here are the items currently planned. 
-* Thorough commenting of code
+* ~~Thorough commenting of code to make this example more meaningful.~~ (Complete)
 * ~~Enhancement to the example page so you don't have to copy and paste the embed token into it to test your deployment~~ (Complete)
 * Better error handling in the Azure function (checking to see if a report exists, checking if the right roles are being used, etc.)
 * Additional configuratbility using environment variables (e.g. Token TTL)

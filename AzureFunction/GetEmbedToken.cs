@@ -14,11 +14,16 @@ namespace GetEmbedToken {
     [FunctionName("GetEmbedToken")]
     public static async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log) {
+      
       //Capture the parameters passed through the web service call
-      Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("WorkspaceId"));
       Guid ReportId = new Guid(req.Query["report_id"]);
       string Username = req.Query["username"];
       string Roles = req.Query["roles"];
+      /* For workspaceId we can specify this as an environment variable, however if workspace_id is provided at run time 
+          we'll override it. */
+      Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("WorkspaceId"));
+      if (!String.IsNullOrEmpty(req.Query["workspace_id"]))
+        WorkspaceId = new Guid(req.Query["workspace_id"]); 
 
       // Make an call to get the Power BI Embed token from  Services/PowerBIManager.cs
       var embedToken = await PowerBiManager.GetEmbedToken(WorkspaceId, ReportId, Username, Roles);

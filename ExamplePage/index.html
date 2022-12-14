@@ -24,13 +24,15 @@
 		var username = document.getElementById("username").value;
 		var roles = document.getElementById("roles").value;
 		var report_id = document.getElementById("report_id").value;
+		var workspace_id = document.getElementById("workspace_id").value;
 
 		//Call Azure Function
 		$.get(function_url, {
 				code: function_key, 
 				username: username, 
 				roles: roles, 
-				report_id: report_id
+				report_id: report_id,
+				workspace_id: workspace_id
 			},
 			function(response) {
 				loadReport(response); 
@@ -70,11 +72,13 @@
 		<tr>
 			<td>API Url: <input type="text" name="function_url" id="function_url" value="http://localhost:7071/api/GetEmbedToken"></td>
 			<td>API Key: <input type="text" name="function_key" id="function_key" value="aBcDeFgHiJkLmNoPqRsTuVwZyZ1234567890aBcDeFgHiJkLmNoPqR=="></td>
+			<td>Report Id:<input type="text" name="workspace_id" id="workspace_id" value="00000000-0000-0000-0000-000000000000"></td>
 			<td>Report Id:<input type="text" name="report_id" id="report_id" value="00000000-0000-0000-0000-000000000000"></td>
 		</tr>
 		<tr>
 			<td>Username: <input type="text" name="username" id="username" value="auser"></td>
 			<td>Roles: <input type="text" name="roles" id="roles" value="role1, role2"></td>
+			<td></td>
 			<td align="right"><input type="button" name="button" id="button" value="Load Report" onClick="getToken()"></td>
 		</tr>
 	</table>
