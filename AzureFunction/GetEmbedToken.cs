@@ -11,7 +11,7 @@ namespace GetEmbedToken {
   public static class GetEmbedToken {
     [FunctionName("GetEmbedToken")]
     public static async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log) {
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log) {
 
       Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("WorkspaceId"));
       Guid ReportId = new Guid(req.Query["report_id"]);
