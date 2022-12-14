@@ -1,38 +1,84 @@
 <html>
+<head>
+	<!-- You will need to link to the proper JS libraries -->
+	<!-- JQuery JS Files Located at https://jquery.com/ -->
+	<script src="./jquery.js"></script>
+	<!-- PowerBI JS Files Located at https://github.com/microsoft/PowerBI-JavaScript -->
+	<script src="./powerbi.js"></script>
+	<script type="text/javascript">
 
-<!-- You will need to link to the proper JS libraries -->
-<!-- JQuery JS Files Located at https://jquery.com/ -->
-<script src="./jquery.js"></script>
-<!-- PowerBI JS Files Located at https://github.com/microsoft/PowerBI-JavaScript -->
-<script src="./powerbi.js"></script>
-<script type="text/javascript">
+	/* The Azure Function below should never ever be called client side in production. Calling the function client side gives uers 
+	access to 	capture the tokens potentially giving them access to data they aren't allowed to see. It's here for illustrative 
+	purposes to 	show users how the workflow works. 
 
-window.onload = function () {
+	In this case a call is made to the webservice providing the username to pass to the report, report roles to use the username 
+	with - these must map to the RLS roles within the report itself, and the report ID which is the GUID of the report. 
+	*/
+	function getToken() 
+	{
+		var function_url = document.getElementById("function_url").value;
+		var function_key = document.getElementById("function_key").value;
 
-let models = window['powerbi-client'].models;
+		var username = document.getElementById("username").value;
+		var roles = document.getElementById("roles").value;
+		var report_id = document.getElementById("report_id").value;
 
-var embedConfiguration = {
-    type: 'report',
-	accessToken: '<EMBED TOKEN>',
-	tokenType: models.TokenType.Embed,
-    embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=<REPORT ID>&groupId=<WORKSPACE ID>',
-	id:'<REPORT ID>'
-//settings: {
-//              {settings_ from link}
-//            }
-    }; 
-var $reportContainer = $('#dashboardContainer');
-var report = powerbi.embed($reportContainer.get(0), embedConfiguration);
-}
+		
+		$.get(function_url, {
+				code: function_key, 
+				username: username, 
+				roles: roles, 
+				report_id: report_id
+			},
+			function(response) {
+				loadReport(response); 
+			}
+		).fail(function(){
+			alert("Unable to request token");
+		});
+	}
+    // End Warning Section
 
-function reloadreport(){
-	var element = $('#dashboardContainer');
-	alert(element);
-	var report = powerbi.get(element);
-	report.reload().catch(error => {console.log(error)  });
-};
-</script> 
+	/*
+	Once we have an embed token we can use the JavaScript Power BI SDK to load the report onto the page. The code below takes
+	the output of our GetEmbedToken Azure function and uses that information to call the embed service. This places the report
+	inside of an iframe inside of the specified report container. When the GetEmbedToken Azure function is called server 
+	side (and secured with the proper API keys) this is a secure way to access embedded reports without giving users unecessary
+	access.
+	*/
+	function loadReport(config) {
+		let models = window['powerbi-client'].models;
+		var embedConfiguration = {
+				type: 'report',
+				accessToken: config.embedToken,
+				tokenType: models.TokenType.Embed,
+				embedUrl: config.reportUri,
+				id: config.reportId,
+			}; 
+		var $reportContainer = $('#dashboardContainer');
+		//We call reset here to make sure we pull in a new report if the parmaeters change in the input form.
+		powerbi.reset($reportContainer.get(0))
+		var report = powerbi.embed($reportContainer.get(0), embedConfiguration);
+	}
+	</script> 
+</head>
+<body>
+<form>
+	<table>
+		<tr>
+			<td>API Url: <input type="text" name="function_url" id="function_url" value="http://localhost:7071/api/GetEmbedToken"></td>
+			<td>API Key: <input type="text" name="function_key" id="function_key" value="aBcDeFgHiJkLmNoPqRsTuVwZyZ1234567890aBcDeFgHiJkLmNoPqR=="></td>
+			<td>Report Id:<input type="text" name="report_id" id="report_id" value="00000000-0000-0000-0000-000000000000"></td>
+		</tr>
+		<tr>
+			<td>Username: <input type="text" name="username" id="username" value="auser"></td>
+			<td>Roles: <input type="text" name="roles" id="roles" value="role1, role2"></td>
+			<td align="right"><input type="button" name="button" id="button" value="Load Report" onClick="getToken()"></td>
+		</tr>
+	</table>
+</form>
 <div id="dashboardContainer"></div>
+</body>
 </html>  
 
 
