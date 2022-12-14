@@ -9,7 +9,7 @@ This project is made up of three components.
 |Component|Description|
 |---|---|
 |AzureFunction|This is the main component of this project, this is the function that does the heavy lifting for you.|
-|ExamplePage|This is a simple HTML page with JavaScript code to help illustrate how this would be used in your application.|
+|ExamplePage|This is a simple HTML page with JavaScript code to help illustrate how this would be used in your application. If you've deployed the function and test report you can access a deployed version of the exmaple page at https://pbitest.pages.dev to give your deployment a try.|
 |TestReport|This is a test Power BI file that helps you see the Username being passed when embedding.|
 
 ## Environment Variables
@@ -32,6 +32,7 @@ This example is still fairly rough, and I'm working to add some additional enhan
 * Better error handling in the Azure function (checking to see if a report exists, checking if the right roles are being used, etc.)
 * Additional configuratbility using environment variables (e.g. Token TTL)
 * ~~Utilization of the function's Service Principal instead of an App Registration for authenticating to Power BI.~~ (Complete)
+* Read WorkspaceId from the HTTP request for more flexibility.
 
 ## Credit
 This project was originally forked from [PowerBIDevCamp](https://github.com/PowerBiDevCamp/GetEmbedToken), and enhanced to enable the use of effective identities. When I started working on this project I had a rough idea on what I needed to accomplish and their version of the code really got me moving in the right direction.
