@@ -16,8 +16,8 @@ This project is made up of three components.
 This function supports various environment variables and request parameters to configure the report being embedded. The table below shows all of the configuration items and where they can be used. In general if a configuration can be set in the environment
 or the request parameter, the request parameter will take priority. 
 
-|Name|Environment|Request|Description|Required|
-|---|---|---|---|---|
+|Name|Environment|Request|Description|
+|---|---|---|---|
 |app_id|X||When specififed the function will login to Power BI using the specified app registration instead of its default behavior which uses its managed identity.|
 |app_secret|X||Used in conjunction with AppId to specify the app registration secret.|
 |tenant_id|X||Used to specify the Azure Active Directory tenant to authenticate the App Registration with when AppId is specified|
