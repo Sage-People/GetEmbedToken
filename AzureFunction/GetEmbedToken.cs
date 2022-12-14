@@ -20,8 +20,25 @@ namespace GetEmbedToken {
 
       var embedToken = await PowerBiManager.GetEmbedToken(WorkspaceId, ReportId, Username, Roles);
 
-      return new OkObjectResult(embedToken);
+      var output = new ExecutionResult(WorkspaceId, ReportId, embedToken, 
+        String.Format("https://app.powerbi.com/reportEmbed?reportId={0}&groupId={1}", ReportId, WorkspaceId));
+
+      return new OkObjectResult(output);
 
     }
   }
+
+  public class ExecutionResult {
+       public ExecutionResult(Guid WorkspaceId, Guid ReportId, string EmbedToken, string ReportUri) {
+        this.WorkspaceId = WorkspaceId;
+        this.ReportId = ReportId;
+        this.EmbedToken = EmbedToken;
+        this.ReportUri = ReportUri;
+       }
+       public Guid WorkspaceId { get; set; }
+       public Guid ReportId { get; set; }
+       public string EmbedToken { get; set; }
+       public string ReportUri {get; set;}
+  }
+
 }
