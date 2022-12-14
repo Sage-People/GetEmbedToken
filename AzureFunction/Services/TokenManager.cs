@@ -14,7 +14,7 @@ namespace GetEmbedToken.Services {
     public static string GetAadAccessToken() {
       
       //Read the AppId envirnoment variable.
-      string appId = Environment.GetEnvironmentVariable("AppId");
+      string appId = Environment.GetEnvironmentVariable("app_id");
  
       //Set cope for OAuth token to allow it to authenticate to Power BI
       string token = null; 
@@ -23,8 +23,8 @@ namespace GetEmbedToken.Services {
       /* If we successfully read the appId environment variable we'll get the OAuth token using an app registration,
           otherwise we'll use the system managed identity on the Azure Functions application */
       if (appId != null) {
-        string appSecret = Environment.GetEnvironmentVariable("AppSecret");
-        string tenentId = Environment.GetEnvironmentVariable("TenantId");
+        string appSecret = Environment.GetEnvironmentVariable("app_secret");
+        string tenentId = Environment.GetEnvironmentVariable("tenant_id");
         string tenantSpecificAuthority = "https://login.microsoftonline.com/" + tenentId;
         var appConfidential = ConfidentialClientApplicationBuilder.Create(appId)
                                 .WithClientSecret(appSecret)

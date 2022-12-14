@@ -12,15 +12,21 @@ This project is made up of three components.
 |ExamplePage|This is a simple HTML page with JavaScript code to help illustrate how this would be used in your application. If you've deployed the function and test report you can access a deployed version of the exmaple page at https://pbitest.pages.dev to give your deployment a try.|
 |TestReport|This is a test Power BI file that helps you see the Username being passed when embedding.|
 
-## Environment Variables
-This function supports the following environment variables for configuration. 
-|Variable|Description|Required|
-|---|---|---|
-|AppId|When specififed the function will login to Power BI using the specified app registration instead of its default behavior which uses its managed identity.
-|AppSecret|Used in conjunction with AppId to specify the app registration secret.
-|TenantId|Used to specify the Azure Active Directory tenant to authenticate the App Registration with when AppId is specified
-|WorkspaceId|Guid which identifies the default Power BI workspace to use with this function, it can be overrode at execution time by specifying a 'workspace_id'
-|TokenTimeout|Specifies how long the Embed Token should live for in minutes. This can be overwritten at execution time by passing token_timeout to the function.
+## Variables & Request Parameters
+This function supports various environment variables and request parameters to configure the report being embedded. The table below shows all of the configuration items and where they can be used. In general if a configuration can be set in the environment
+or the request parameter, the request parameter will take priority. 
+
+|Name|Environment|Request|Description|Required|
+|---|---|---|---|---|
+|app_id|X||When specififed the function will login to Power BI using the specified app registration instead of its default behavior which uses its managed identity.|
+|app_secret|X||Used in conjunction with AppId to specify the app registration secret.|
+|tenant_id|X||Used to specify the Azure Active Directory tenant to authenticate the App Registration with when AppId is specified|
+|token_timeout|X|X|Specifies how long the Embed Token should live for in minutes.|
+|workspace_id|X|X|Guid which identifies the Power BI workspace to use with this function.|
+|report_id||X|GUID which identifies the Power BI report to embed.|
+|username||X|The effective username to pass through to the PowerBI report. This can be any string, and will surface as Username() in the report.|
+|roles||X|Comma separated list of roles to apply the Embed Token to. This must match the name of your roles in your report, and there must be at least one role defined in the report for this to work.|
+
 
 ## Known Issues
 * In this model reports need to be embedded using Java Script so your deployment requires proper CORS headers

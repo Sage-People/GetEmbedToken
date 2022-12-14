@@ -19,18 +19,18 @@ namespace GetEmbedToken {
       Guid ReportId = new Guid(req.Query["report_id"]);
       string Username = req.Query["username"];
       string Roles = req.Query["roles"];
-      /* For workspaceId we can specify this as an environment variable, however if workspace_id is provided at run time 
+      /* For workspace_id we can specify this as an environment variable, however if workspace_id is provided at run time 
           we'll override it. */
-      Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("WorkspaceId"));
+      Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("workspace_id"));
       if (!String.IsNullOrEmpty(req.Query["workspace_id"]))
         WorkspaceId = new Guid(req.Query["workspace_id"]); 
-      /* For TokenTimeout we can specify this as an environment variable, however if token_timeout is provided at run time 
+      /* For token_timeout we can specify this as an environment variable, however if token_timeout is provided at run time 
           we'll override it. If it's not specified we'll default it to 10 */
       int TokenTimeout = 10;
       if (!String.IsNullOrEmpty(req.Query["token_timeout"]))
         TokenTimeout = int.Parse(req.Query["token_timeout"]); 
-      else if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("TokenTimeout")))
-        TokenTimeout = int.Parse(Environment.GetEnvironmentVariable("TokenTimeout"));
+      else if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("token_timeout")))
+        TokenTimeout = int.Parse(Environment.GetEnvironmentVariable("token_timeout"));
 
       // Make an call to get the Power BI Embed token from  Services/PowerBIManager.cs
       var embedToken = await PowerBiManager.GetEmbedToken(WorkspaceId, ReportId, Username, Roles, TokenTimeout);
