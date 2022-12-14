@@ -31,6 +31,7 @@ or the request parameter, the request parameter will take priority.
 ## Known Issues
 * In this model reports need to be embedded using Java Script so your deployment requires proper CORS headers
 * Calling the Azure function needs to be done using server-side code, calling the function client size will lead to an insecure deployment.
+* In order for Effective Identity to be available, your Power BI report must have at least one role and that role must be listed in the `roles` configuration item.
 
 ## Future Enhancements
 This example is still fairly rough, and I'm working to add some additional enhancements so it's more useful for users wishing to repeat the pattern. Here are the items currently planned. 
@@ -43,4 +44,4 @@ This example is still fairly rough, and I'm working to add some additional enhan
 * Add support to install the function in your environment with Azure Templates.
 
 ## Credit
-This project was originally forked from [PowerBIDevCamp](https://github.com/PowerBiDevCamp/GetEmbedToken), and enhanced to enable the use of effective identities. When I started working on this project I had a rough idea on what I needed to accomplish and their version of the code really got me moving in the right direction.
+This project was originally forked from [PowerBIDevCamp](https://github.com/PowerBiDevCamp/GetEmbedToken), and enhanced to enable the use of effective identities. When I started working on this project I had a rough idea on what I needed to accomplish and their version of the code really got me moving in the right direction. 
