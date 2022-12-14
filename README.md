@@ -28,10 +28,10 @@ This function supports the following environment variables for configuration.
 ## Future Enhancements
 This example is still fairly rough, and I'm working to add some additional enhancements so it's more useful for users wishing to repeat the pattern. Here are the items currently planned. 
 * Thorough commenting of code
-* Enhancement to the example page so you don't have to copy and paste the embed token into it to test your deployment
+* ~~Enhancement to the example page so you don't have to copy and paste the embed token into it to test your deployment~~ (Complete)
 * Better error handling in the Azure function (checking to see if a report exists, checking if the right roles are being used, etc.)
 * Additional configuratbility using environment variables (e.g. Token TTL)
-* Utilization of the function's Service Principal instead of an App Registration for authenticating to Power BI.
+* ~~Utilization of the function's Service Principal instead of an App Registration for authenticating to Power BI.~~ (Complete)
 
 ## Credit
 This project was originally forked from [PowerBIDevCamp](https://github.com/PowerBiDevCamp/GetEmbedToken), and enhanced to enable the use of effective identities. When I started working on this project I had a rough idea on what I needed to accomplish and their version of the code really got me moving in the right direction.
