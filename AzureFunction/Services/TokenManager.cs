@@ -10,18 +10,16 @@ using Azure.Core;
 namespace GetEmbedToken.Services {
 
   class TokenManager {
-
     public static string GetAadAccessToken() {
-
       string appId = Environment.GetEnvironmentVariable("AppId");
-      string appSecret = Environment.GetEnvironmentVariable("AppSecret");
-      string tenentId = Environment.GetEnvironmentVariable("TenantId");
-      string tenantSpecificAuthority = "https://login.microsoftonline.com/" + tenentId;
  
       string token = null; 
       string[] scopes = { "https://analysis.windows.net/powerbi/api/.default" };
 
       if (appId != null) {
+        string appSecret = Environment.GetEnvironmentVariable("AppSecret");
+        string tenentId = Environment.GetEnvironmentVariable("TenantId");
+        string tenantSpecificAuthority = "https://login.microsoftonline.com/" + tenentId;
         var appConfidential = ConfidentialClientApplicationBuilder.Create(appId)
                                 .WithClientSecret(appSecret)
                                 .WithAuthority(tenantSpecificAuthority)
