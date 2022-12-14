@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.Core;
 
 namespace GetEmbedToken.Services {
 
@@ -15,17 +17,24 @@ namespace GetEmbedToken.Services {
       string appSecret = Environment.GetEnvironmentVariable("AppSecret");
       string tenentId = Environment.GetEnvironmentVariable("TenantId");
       string tenantSpecificAuthority = "https://login.microsoftonline.com/" + tenentId;
+ 
+      string token = null; 
+      string[] scopes = { "https://analysis.windows.net/powerbi/api/.default" };
 
-      var appConfidential = ConfidentialClientApplicationBuilder.Create(appId)
+      if (appId != null) {
+        var appConfidential = ConfidentialClientApplicationBuilder.Create(appId)
                                 .WithClientSecret(appSecret)
                                 .WithAuthority(tenantSpecificAuthority)
                                 .Build();
+        var authResult = appConfidential.AcquireTokenForClient(scopes).ExecuteAsync().Result;
+        token = authResult.AccessToken;
+      } else {
+        var credential = new DefaultAzureCredential();
+        var context = new TokenRequestContext(scopes);
+        token = credential.GetTokenAsync(context).Result.Token;
+      }
 
-      string[] scopes = { "https://analysis.windows.net/powerbi/api/.default" };
-
-      var authResult = appConfidential.AcquireTokenForClient(scopes).ExecuteAsync().Result;
-
-      return authResult.AccessToken;
+      return token;
     } 
 
   }
