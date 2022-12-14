@@ -12,6 +12,15 @@ This project is made up of three components.
 |ExamplePage|This is a simple HTML page with JavaScript code to help illustrate how this would be used in your application.|
 |TestReport|This is a test Power BI file that helps you see the Username being passed when embedding.|
 
+## Environment Variables
+This function supports the following environment variables for configuration. 
+|Variable|Description|Required|
+|---|---|---|
+|AppId|When specififed the function will login to Power BI using the specified app registration instead of its default behavior which uses its managed identity.|No|
+|AppSecret|Used in conjunction with AppId to specify the app registration secret.|With AppId|
+|TenantId|Used to specify the Azure Active Directory tenant to authenticate the App Registration with when AppId is specified|No|
+|WorkspaceId|Guid which identifies the Power BI workspace to use with this function|Yes|
+
 ## Known Issues
 * In this model reports need to be embedded using Java Script so your deployment requires proper CORS headers
 * Calling the Azure function needs to be done using server-side code, calling the function client size will lead to an insecure deployment.
