@@ -16,6 +16,8 @@
 	*/
 	function getToken() 
 	{
+
+		//Get variables from HTML form
 		var function_url = document.getElementById("function_url").value;
 		var function_key = document.getElementById("function_key").value;
 
@@ -23,7 +25,7 @@
 		var roles = document.getElementById("roles").value;
 		var report_id = document.getElementById("report_id").value;
 
-		
+		//Call Azure Function
 		$.get(function_url, {
 				code: function_key, 
 				username: username, 
