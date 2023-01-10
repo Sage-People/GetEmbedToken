@@ -14,7 +14,12 @@ namespace GetEmbedToken.Services {
     public static string GetAadAccessToken() {
       
       //Read the AppId envirnoment variable.
-      string appId = Environment.GetEnvironmentVariable("app_id");
+      string appId = null;
+      try {
+        appId = Environment.GetEnvironmentVariable("app_id");
+      } catch (ArgumentNullException) {
+        // Continue and keep appId as null we'll try Serviice Principal instead;
+      }
  
       //Set cope for OAuth token to allow it to authenticate to Power BI
       string token = null; 
