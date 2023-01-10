@@ -21,9 +21,10 @@ namespace GetEmbedToken {
       string Roles = req.Query["roles"];
       /* For workspace_id we can specify this as an environment variable, however if workspace_id is provided at run time 
           we'll override it. */
-      Guid WorkspaceId = new Guid(Environment.GetEnvironmentVariable("workspace_id"));
+      Guid WorkspaceId;
       if (!String.IsNullOrEmpty(req.Query["workspace_id"]))
         WorkspaceId = new Guid(req.Query["workspace_id"]); 
+      else WorkspaceId = new Guid(Environment.GetEnvironmentVariable("workspace_id"));
       /* For token_timeout we can specify this as an environment variable, however if token_timeout is provided at run time 
           we'll override it. If it's not specified we'll default it to 10 */
       int TokenTimeout = 10;
