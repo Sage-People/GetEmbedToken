@@ -266,3 +266,4 @@ __pycache__/
 *.pyc
 ExamplePage/jquery.js
 ExamplePage/powerbi.js
+org_list.json
